@@ -75,7 +75,7 @@ def task_8_sum_of_ints(data: List[int]) -> int:
     """
     Find sum of all items in given list
     """
-    pass
+    return sum(data)
 
 
 def task_9_sum_characters_positions(text: str) -> int:
