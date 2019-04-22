@@ -1,3 +1,4 @@
+from functools import reduce
 from typing import List, Dict, Union, Generator
 
 # We will work with such dicts
@@ -25,7 +26,7 @@ def task_2_remove_dict_fields(data: DT, redundant_keys: List[str]) -> DT:
        remove_dict_field([{'name': 'Alex', 'age': 26}, {'name': 'denys', 'age': 89}], 'age')
         >>> [{'name': 'Alex'}, {'name': 'denys'}]
     """
-    return [{key: value for (key, value) in dt.items() if key not in redundant_keys} for dt in data]
+    return [{key: value for key, value in dt.items() if key not in redundant_keys} for dt in data]
 
 
 def task_3_find_item_via_value(data: DT, value) -> DT:
@@ -35,7 +36,7 @@ def task_3_find_item_via_value(data: DT, value) -> DT:
         find_item_via_value([{'name': 'Alex', 'age': 26}, {'name': 'denys', 'age': 89}], 26)
         >>> [{'name': 'Alex', 'age': 26}]
     """
-    pass
+    return [d for d in data for k, v in d.items() if v == value]
 
 
 def task_4_min_value_integers(data: List[int]) -> int:
@@ -50,7 +51,8 @@ def task_5_min_value_strings(data: List[Union[str, int]]) -> str:
     """
     Find the longest string
     """
-    pass
+    while data:
+        return str(min(data, key=lambda x: len(str(x))))
 
 
 def task_6_min_value_list_of_dicts(data: DT, key: str) -> ST:
