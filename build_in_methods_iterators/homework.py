@@ -61,14 +61,15 @@ def task_6_min_value_list_of_dicts(data: DT, key: str) -> ST:
     Returns:
 
     """
-    pass
+    clean_list = list(filter(lambda x: x.get(key), data))
+    return min(clean_list, key=lambda x: x.get(key))
 
 
 def task_7_max_value_list_of_lists(data: List[List[int]]) -> int:
     """
     Find max value from list of lists
     """
-    pass
+    return max(max(map(lambda x: x, data)))
 
 
 def task_8_sum_of_ints(data: List[int]) -> int:
@@ -91,7 +92,7 @@ def task_9_sum_characters_positions(text: str) -> int:
         >>> 532
 
     """
-    pass
+    return sum(map(lambda x: ord(x), text))
 
 
 def task_10_generator_of_simple_numbers() -> Generator[int, None, None]:
