@@ -1,4 +1,5 @@
-from functools import reduce
+import random
+import string
 from typing import List, Dict, Union, Generator
 
 # We will work with such dicts
@@ -106,7 +107,16 @@ def task_10_generator_of_simple_numbers() -> Generator[int, None, None]:
         next(a)
         >>> 3
     """
-    pass
+    number = 2
+    while number < 200:
+        prime = True  # reset the `prime` variable before the inner loop
+        for i in range(2, number):
+            if number % i == 0:
+                prime = False
+                break
+        if prime:
+            yield number
+        number += 1
 
 
 def task_11_create_list_of_random_characters() -> List[str]:
@@ -114,4 +124,4 @@ def task_11_create_list_of_random_characters() -> List[str]:
     Create list of 20 elements where each element is random letter from latin alphabet
 
     """
-    pass
+    return random.choices(string.ascii_lowercase, k=20)
