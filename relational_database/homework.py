@@ -158,7 +158,8 @@ def task_11_list_customers_starting_from_11th(cur):
 
     Returns: 11 records
     """
-    pass
+    cur.execute("SELECT * FROM customers OFFSET 11;")
+    return cur.fetchall()
 
 
 def task_12_list_suppliers_from_specified_countries(cur):
@@ -170,7 +171,9 @@ def task_12_list_suppliers_from_specified_countries(cur):
 
     Returns: 8 records
     """
-    pass
+    cur.execute("""SELECT supplierid, suppliername, contactname, city, country
+                   FROM suppliers WHERE country IN ('USA', 'UK', 'Japan');""")
+    return cur.fetchall()
 
 
 def task_13_list_products_from_sweden_suppliers(cur):
@@ -182,7 +185,10 @@ def task_13_list_products_from_sweden_suppliers(cur):
 
     Returns: 3 records
     """
-    pass
+    cur.execute("""SELECT productname
+                   FROM products, suppliers
+                   WHERE products.supplierid = suppliers.supplierid AND suppliers.country = 'Sweden';""")
+    return cur.fetchall()
 
 
 def task_14_list_products_with_supplier_information(cur):
@@ -194,7 +200,11 @@ def task_14_list_products_with_supplier_information(cur):
 
     Returns: 77 records
     """
-    pass
+    cur.execute("""SELECT  products.productid, products.productname, products.unit, products.price, suppliers.country,
+                           suppliers.city, suppliers.suppliername
+                   FROM products, suppliers
+                   WHERE products.supplierid = suppliers.supplierid;""")
+    return cur.fetchall()
 
 
 def task_15_list_customers_with_any_order_or_not(cur):
@@ -206,7 +216,9 @@ def task_15_list_customers_with_any_order_or_not(cur):
 
     Returns: 213 records
     """
-    pass
+    cur.execute("""SELECT customername, contactname, country, orderid
+                   FROM customers FULL JOIN orders ON customers.customerid = orders.customerid;""")
+    return cur.fetchall()
 
 
 def task_16_match_all_customers_and_suppliers_by_country(cur):
@@ -218,4 +230,6 @@ def task_16_match_all_customers_and_suppliers_by_country(cur):
 
     Returns: 194 records
     """
-    pass
+    cur.execute("""SELECT customers.customername, customers.country, customers.address, suppliers.suppliername, suppliers,country
+                   FROM customers FULL JOIN suppliers on customers.country = suppliers.country;""")
+    return cur.fetchall()
