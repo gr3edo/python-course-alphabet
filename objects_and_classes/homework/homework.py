@@ -1,3 +1,5 @@
+import uuid
+from objects_and_classes.homework.constants import CARS_TYPES, CARS_PRODUCER, TOWNS
 """
 Вам небхідно написати 3 класи. Колекціонери Гаражі та Автомобілі.
 Звязкок наступний один колекціонер може мати багато гаражів.
@@ -53,8 +55,32 @@ class Cesar:
 
 
 class Car:
-    pass
+    def __init__(self, price: float, type: CARS_TYPES, producer: CARS_PRODUCER, mileage: float):
+        self.price = price
+        self.mileage = mileage
+        self.number = uuid.uuid4()
+        self.type = type if type in CARS_TYPES else []
+        self.producer = producer if producer in CARS_PRODUCER else []
 
 
 class Garage:
-    pass
+    owner: uuid.UUID
+
+    def __init__(self, town: TOWNS, places: int, owner=None, cars=[]):
+        self.town = town if town in TOWNS else []
+        self.cars = cars
+        self.places = places
+        self.owner = owner
+
+    def add(self, car):
+        if len(self.cars) < self.places:
+            self.cars.append(car)
+        else:
+            print("Missing free space for the new car")
+
+    def remove(self, car):
+        self.cars.remove(car)
+
+
+    # def hit_hat(self):
+    #     return
