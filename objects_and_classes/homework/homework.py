@@ -51,7 +51,23 @@ from objects_and_classes.homework.constants import CARS_TYPES, CARS_PRODUCER, TO
 
 
 class Cesar:
-    pass
+    def __init__(self, name: str, garages=None):
+        self.name = name
+        self.garages = garages if garages else []
+        self.register_id = uuid.uuid4()
+
+    def hit_hat(self):
+        return sum(garage.hit_hat() for garage in self.garages)
+
+    def garages_count(self):
+        return len(self.garages)
+
+    def cars_count(self):
+        return sum(len(garage.cars) for garage in self.garages)
+
+    def add_car(self, garage=None):
+        pass
+
 
 
 class Car:
@@ -61,6 +77,30 @@ class Car:
         self.number = uuid.uuid4()
         self.type = type if type in CARS_TYPES else []
         self.producer = producer if producer in CARS_PRODUCER else []
+
+    def __repr__(self):
+        return f"Car: price - {self.price}, type - {self.type}, producer - {self.producer}, mileage - {self.mileage}"
+
+    def change_number(self):
+        self.number = uuid.uuid4()
+
+    def __eq__(self, other):
+        return self.price == other.price
+
+    def __ne__(self, other):
+        return self.price != other.price
+
+    def __gt__(self, other):
+        return self.price > other.price
+
+    def __ge__(self, other):
+        return self.price >= other.price
+
+    def __lt__(self, other):
+        return self.price < other.price
+
+    def __le__(self, other):
+        return self.price <= other.price
 
 
 class Garage:
@@ -81,6 +121,5 @@ class Garage:
     def remove(self, car):
         self.cars.remove(car)
 
-
-    # def hit_hat(self):
-    #     return
+    def hit_hat(self):
+        return sum(car.price for car in self.cars)
