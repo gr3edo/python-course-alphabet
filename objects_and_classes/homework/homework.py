@@ -51,7 +51,7 @@ from objects_and_classes.homework.constants import CARS_TYPES, CARS_PRODUCER, TO
 
 
 class Cesar:
-    def __init__(self, name: str, garages=None):
+    def __init__(self, name: str, garages=0):
         self.name = name
         self.garages = garages if garages else []
         self.register_id = uuid.uuid4()
@@ -65,9 +65,32 @@ class Cesar:
     def cars_count(self):
         return sum(len(garage.cars) for garage in self.garages)
 
-    def add_car(self, garage=None):
-        pass
+    def add_car(self, car, garage=None):
+        if garage is not None:
+            if garage.places > 0:
+                garage.add(car)
+            else:
+                print("Missing free space for the car")
+        else:
+            return max(self.garages, key=lambda x: (x.places-len(x.cars))).add(car)
 
+    def __eq__(self, other):
+        return self.hit_hat() == other.hit_hat()
+
+    def __ne__(self, other):
+        return self.hit_hat() != other.hit_hat()
+
+    def __gt__(self, other):
+        return self.hit_hat() > other.hit_hat()
+
+    def __lt__(self, other):
+        return self.hit_hat() < other.hit_hat()
+
+    def __ge__(self, other):
+        return self.hit_hat() >= other.hit_hat()
+
+    def __le__(self, other):
+        return self.hit_hat() <= other.hit_hat()
 
 
 class Car:
@@ -93,11 +116,11 @@ class Car:
     def __gt__(self, other):
         return self.price > other.price
 
-    def __ge__(self, other):
-        return self.price >= other.price
-
     def __lt__(self, other):
         return self.price < other.price
+
+    def __ge__(self, other):
+        return self.price >= other.price
 
     def __le__(self, other):
         return self.price <= other.price
