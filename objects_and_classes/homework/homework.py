@@ -95,8 +95,8 @@ class Cesar:
 
 class Car:
     def __init__(self, price: float, car_type: CARS_TYPES, producer: CARS_PRODUCER, mileage: float):
-        self.price = price
-        self.mileage = mileage
+        self.price = float(price)
+        self.mileage = float(mileage)
         self.number = uuid.uuid4()
 
         if producer in CARS_PRODUCER:
