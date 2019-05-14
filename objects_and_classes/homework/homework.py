@@ -98,11 +98,19 @@ class Car:
         self.price = price
         self.mileage = mileage
         self.number = uuid.uuid4()
-        self.type = car_type if car_type in CARS_TYPES else []
-        self.producer = producer if producer in CARS_PRODUCER else []
+
+        if producer in CARS_PRODUCER:
+            self.producer = producer
+        else:
+            raise Exception("Producer should be from CAR_PRODUCER")
+
+        if car_type in CARS_TYPES:
+            self.car_type = car_type
+        else:
+            raise Exception("Type should be from CAR_TYPES")
 
     def __repr__(self):
-        return f"Car: price - {self.price}, type - {self.type}, producer - {self.producer}, mileage - {self.mileage}, number - {self.number}"
+        return f"Car: price - {self.price}, type - {self.car_type}, producer - {self.producer}, mileage - {self.mileage}, number - {self.number}"
 
     def change_number(self):
         self.number = uuid.uuid4()
@@ -130,7 +138,12 @@ class Garage:
     owner: uuid.UUID
 
     def __init__(self, town: TOWNS, places: int, owner=None, cars=[]):
-        self.town = town if town in TOWNS else []
+
+        if town in TOWNS:
+            self.town = town
+        else:
+            raise Exception("Town should be from TOWNS")
+
         self.cars = cars
         self.places = places
         self.owner = owner
