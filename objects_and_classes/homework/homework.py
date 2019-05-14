@@ -102,7 +102,7 @@ class Car:
         self.producer = producer if producer in CARS_PRODUCER else []
 
     def __repr__(self):
-        return f"Car: price - {self.price}, type - {self.type}, producer - {self.producer}, mileage - {self.mileage}"
+        return f"Car: price - {self.price}, type - {self.type}, producer - {self.producer}, mileage - {self.mileage}, number - {self.number}"
 
     def change_number(self):
         self.number = uuid.uuid4()
