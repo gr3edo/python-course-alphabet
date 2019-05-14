@@ -94,11 +94,11 @@ class Cesar:
 
 
 class Car:
-    def __init__(self, price: float, type: CARS_TYPES, producer: CARS_PRODUCER, mileage: float):
+    def __init__(self, price: float, car_type: CARS_TYPES, producer: CARS_PRODUCER, mileage: float):
         self.price = price
         self.mileage = mileage
         self.number = uuid.uuid4()
-        self.type = type if type in CARS_TYPES else []
+        self.type = car_type if car_type in CARS_TYPES else []
         self.producer = producer if producer in CARS_PRODUCER else []
 
     def __repr__(self):
