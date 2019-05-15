@@ -1,3 +1,5 @@
+import uuid
+from objects_and_classes.homework.constants import CARS_TYPES, CARS_PRODUCER, TOWNS
 """
 Вам небхідно написати 3 класи. Колекціонери Гаражі та Автомобілі.
 Звязкок наступний один колекціонер може мати багато гаражів.
@@ -49,12 +51,111 @@
 
 
 class Cesar:
-    pass
+    def __init__(self, name: str, garages=0):
+        self.name = name
+        self.garages = garages if garages else []
+        self.register_id = uuid.uuid4()
+
+    def hit_hat(self):
+        return sum(garage.hit_hat() for garage in self.garages)
+
+    def garages_count(self):
+        return len(self.garages)
+
+    def cars_count(self):
+        return sum(len(garage.cars) for garage in self.garages)
+
+    def add_car(self, car, garage=None):
+        if garage is not None:
+            if garage.places > 0:
+                garage.add(car)
+            else:
+                print("Missing free space for the car")
+        else:
+            return max(self.garages, key=lambda x: (x.places-len(x.cars))).add(car)
+
+    def __eq__(self, other):
+        return self.hit_hat() == other.hit_hat()
+
+    def __ne__(self, other):
+        return self.hit_hat() != other.hit_hat()
+
+    def __gt__(self, other):
+        return self.hit_hat() > other.hit_hat()
+
+    def __lt__(self, other):
+        return self.hit_hat() < other.hit_hat()
+
+    def __ge__(self, other):
+        return self.hit_hat() >= other.hit_hat()
+
+    def __le__(self, other):
+        return self.hit_hat() <= other.hit_hat()
 
 
 class Car:
-    pass
+    def __init__(self, price: float, car_type: CARS_TYPES, producer: CARS_PRODUCER, mileage: float):
+        self.price = float(price)
+        self.mileage = float(mileage)
+        self.number = uuid.uuid4()
+
+        if producer in CARS_PRODUCER:
+            self.producer = producer
+        else:
+            raise Exception("Producer should be from CAR_PRODUCER")
+
+        if car_type in CARS_TYPES:
+            self.car_type = car_type
+        else:
+            raise Exception("Type should be from CAR_TYPES")
+
+    def __repr__(self):
+        return f"Car: price - {self.price}, type - {self.car_type}, producer - {self.producer}, mileage - {self.mileage}, number - {self.number}"
+
+    def change_number(self):
+        self.number = uuid.uuid4()
+
+    def __eq__(self, other):
+        return self.price == other.price
+
+    def __ne__(self, other):
+        return self.price != other.price
+
+    def __gt__(self, other):
+        return self.price > other.price
+
+    def __lt__(self, other):
+        return self.price < other.price
+
+    def __ge__(self, other):
+        return self.price >= other.price
+
+    def __le__(self, other):
+        return self.price <= other.price
 
 
 class Garage:
-    pass
+    owner: uuid.UUID
+
+    def __init__(self, town: TOWNS, places: int, owner=None, cars=[]):
+
+        if town in TOWNS:
+            self.town = town
+        else:
+            raise Exception("Town should be from TOWNS")
+
+        self.cars = cars
+        self.places = places
+        self.owner = owner
+
+    def add(self, car):
+        if len(self.cars) < self.places:
+            self.cars.append(car)
+        else:
+            print("Missing free space for the new car")
+
+    def remove(self, car):
+        self.cars.remove(car)
+
+    def hit_hat(self):
+        return sum(car.price for car in self.cars)
