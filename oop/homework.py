@@ -52,10 +52,16 @@ class Cat:
             self._increase_saturation_level(2)
 
     def _reduce_saturation_level(self, value):
-        pass
+        if (self.saturation_level - value) <= 0:
+            return 0
+        else:
+            return self.saturation_level - value
 
     def _increase_saturation_level(self, value):
-        pass
+        if (self.saturation_level + value) >= 100:
+            return 100
+        else:
+            return self.saturation_level + value
 
     def _set_average_speed(self):
         if self.age <= 7:
@@ -66,13 +72,28 @@ class Cat:
             return 6
 
     def run(self, hours):
-        pass
+        avg_km = self.get_average_speed() * hours
+
+        if avg_km <= 25:
+            self._reduce_saturation_level(2)
+        elif 25 < avg_km <= 50:
+            self._reduce_saturation_level(5)
+        elif 50 < avg_km <= 100:
+            self._reduce_saturation_level(15)
+        elif 100 < avg_km <= 200:
+            self._reduce_saturation_level(25)
+        else:
+            self._reduce_saturation_level(50)
+        return f"Your cat ran {avg_km} kilometers"
 
     def get_saturation_level(self):
-        pass
+        if self.saturation_level == 0:
+            return "Your cat is died :("
+        else:
+            return self.saturation_level
 
     def get_average_speed(self):
-        pass
+        return self.average_speed
 
 
 class Cheetah:

@@ -1,0 +1,75 @@
+name: Ivan
+register_id: 0e690d9c-fa70-4a3a-817c-97f3e94f5860
+garages:
+- town: Rome
+  places: 2
+  owner:
+  cars:
+  - price: 9530.0
+    car_type: Coupe
+    producer: Lamborghini
+    mileage: 1191.0
+    number: ca451054-4fbd-4294-8052-710b1103715d
+  - price: 16143.0
+    car_type: Luxury Car
+    producer: Buick
+    mileage: 4356.0
+    number: 86ccb978-a6ec-4d21-a1b0-6d3f09f0dcd5
+  - price: 45990.0
+    car_type: Luxury Car
+    producer: Dodge
+    mileage: 1255.0
+    number: 4873845c-5902-4d99-b791-502b2ce196be
+  - price: 32868.0
+    car_type: Crossover
+    producer: Bugatti
+    mileage: 4703.0
+    number: 07742a60-87f0-4125-b57d-d1349906c325
+- town: Kiev
+  places: 3
+  owner:
+  cars:
+  - price: 9530.0
+    car_type: Coupe
+    producer: Lamborghini
+    mileage: 1191.0
+    number: ca451054-4fbd-4294-8052-710b1103715d
+  - price: 16143.0
+    car_type: Luxury Car
+    producer: Buick
+    mileage: 4356.0
+    number: 86ccb978-a6ec-4d21-a1b0-6d3f09f0dcd5
+  - price: 45990.0
+    car_type: Luxury Car
+    producer: Dodge
+    mileage: 1255.0
+    number: 4873845c-5902-4d99-b791-502b2ce196be
+  - price: 32868.0
+    car_type: Crossover
+    producer: Bugatti
+    mileage: 4703.0
+    number: 07742a60-87f0-4125-b57d-d1349906c325
+- town: Berlin
+  places: 4
+  owner:
+  cars:
+  - price: 9530.0
+    car_type: Coupe
+    producer: Lamborghini
+    mileage: 1191.0
+    number: ca451054-4fbd-4294-8052-710b1103715d
+  - price: 16143.0
+    car_type: Luxury Car
+    producer: Buick
+    mileage: 4356.0
+    number: 86ccb978-a6ec-4d21-a1b0-6d3f09f0dcd5
+  - price: 45990.0
+    car_type: Luxury Car
+    producer: Dodge
+    mileage: 1255.0
+    number: 4873845c-5902-4d99-b791-502b2ce196be
+  - price: 32868.0
+    car_type: Crossover
+    producer: Bugatti
+    mileage: 4703.0
+    number: 07742a60-87f0-4125-b57d-d1349906c325
