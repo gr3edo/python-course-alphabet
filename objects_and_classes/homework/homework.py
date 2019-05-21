@@ -51,7 +51,7 @@ from objects_and_classes.homework.constants import CARS_TYPES, CARS_PRODUCER, TO
 
 
 class Cesar:
-    def __init__(self, name: str, garages=0):
+    def __init__(self, name: str, garages=[]):
         self.name = name
         self.garages = garages if garages else []
         self.register_id = uuid.uuid4()

@@ -18,12 +18,12 @@ Advanced
 
 """
 import json
-import random
+import pickle
 import uuid
 
+from ruamel import yaml
 from ruamel.yaml import YAML
 
-from objects_and_classes.homework.constants import CARS_PRODUCER, CARS_TYPES, TOWNS
 from objects_and_classes.homework.homework import Cesar, Garage, Car
 
 
@@ -33,16 +33,34 @@ class SerCesar(Cesar):
 
     def dict(self):
         data = {'name': self.name, 'register_id': str(self.register_id),
-                'garages': [garage.to_dict() for garage in self.garages] if self.garages else [], }
+                'garages': [garage.dict() for garage in self.garages] if self.garages else [], }
 
         return data
 
+    @staticmethod
+    def from_yaml_string(data):
+        return SerCesar.from_yaml(yaml.load(data))
+
     def to_yaml(self):
-        return self.yaml.dump(self.dict())
+        return yaml.dump(self.dict())
 
     def to_yaml_file(self):
         with open("cesar_to_yaml.yaml", 'w') as file:
             self.yaml.dump(self.dict(), file)
+
+    @classmethod
+    def from_yaml(cls, data):
+        name = data['name']
+        garages = [SerGarage.from_yaml_string(data) in data['garages']]
+        return SerCesar(name=name, garages=garages)
+
+    def instance_from_yaml_string(obj, yaml_string: str):
+        return obj.from_yaml(yaml.load(yaml_string))
+
+    @staticmethod
+    def from_yaml_file():
+        with open("cesar_to_yaml.yaml", 'r') as file:
+            return SerCesar.from_yaml(yaml.load(file))
 
 
 # json
@@ -74,7 +92,7 @@ class SerCar(Car):
 
     @classmethod
     def from_json_file(cls):
-        with open("car_from_file.json", 'r') as file:
+        with open("car_to_file.json", 'r') as file:
             instance = json.load(file)
         return cls.from_json(instance)
 
@@ -82,36 +100,47 @@ class SerCar(Car):
 # pickle
 class SerGarage(Garage):
     def dict(self):
-        data = {'town': self.town, 'places': self.places, 'owner': self.owner, 'cars': []}
+        data = {'town': self.town, 'places': self.places, 'owner': self.owner,
+                'cars': [car.dict() for car in self.cars] if self.cars else [], }
 
         if isinstance(self.owner, uuid.UUID):
             data['owner'] = str(self.owner)
-
-        for car in self.cars.values():
-            data['cars'].append(car.to_dict())
-
         return data
 
+    def to_pickle(self):
+        return pickle.dumps(self)
 
-if __name__ == '__main__':
-    car1 = SerCar(price=random.randint(5000, 50000), car_type=random.choice(CARS_TYPES),
-                  producer=random.choice(CARS_PRODUCER), mileage=random.randint(1000, 5000))
-    car2 = SerCar(price=random.randint(5000, 50000), car_type=random.choice(CARS_TYPES),
-                  producer=random.choice(CARS_PRODUCER), mileage=random.randint(1000, 5000))
-    car3 = SerCar(price=random.randint(5000, 50000), car_type=random.choice(CARS_TYPES),
-                  producer=random.choice(CARS_PRODUCER), mileage=random.randint(1000, 5000))
-    car4 = SerCar(price=random.randint(5000, 50000), car_type=random.choice(CARS_TYPES),
-                  producer=random.choice(CARS_PRODUCER), mileage=random.randint(1000, 5000))
+    def to_pickle_file(self):
+        with open("garage_to_pickle", 'wb') as file:
+            pickle.dump(self, file)
 
-    garage1 = SerGarage(town=random.choice(TOWNS), places=2)
-    garage2 = SerGarage(town=random.choice(TOWNS), places=3)
-    garage3 = SerGarage(town=random.choice(TOWNS), places=4)
+    @staticmethod
+    def from_pickle(data):
+        return pickle.loads(data)
 
-    cesar1 = SerCesar(name="Ivan")
+    @staticmethod
+    def from_pickle_file():
+        with open("garage_to_pickle", 'rb') as file:
+            data = pickle.load(file)
+        return data
 
-    cesar1.add_car(car1, garage1)
-    cesar1.add_car(car2, garage1)
-    cesar1.add_car(car3, garage2)
-    cesar1.add_car(car4, garage3)
+    def to_yaml_string(self):
+        garage_yaml_string = self.to_yaml()
+        return str(garage_yaml_string)
 
-    cesar1.to_yaml_file()
+    def to_yaml(obj):
+        cars = [car.to_json_string() for car in obj.cars]
+        data = {"cars": cars, "places": obj.places, "town": obj.town, "owner": str(obj.owner)}
+        return data
+
+    @staticmethod
+    def from_yaml_string(data):
+        return SerGarage.from_yaml(data)
+
+    @staticmethod
+    def from_yaml(data):
+        cars = data['cars']
+        places = data['places']
+        town = data['town']
+        owner = data['owner']
+        return SerGarage(cars=cars, places=places, town=town, owner=owner)
