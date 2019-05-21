@@ -39,10 +39,17 @@ class Cat:
     """
 
     def __init__(self, age):
-        pass
+        self.age = age
+        self.average_speed = self._set_average_speed()
+        self.saturation_level = 50
 
     def eat(self, product):
-        pass
+        if product == "fodder":
+            self._increase_saturation_level(10)
+        elif product == "apple":
+            self._increase_saturation_level(5)
+        elif product == "milk":
+            self._increase_saturation_level(2)
 
     def _reduce_saturation_level(self, value):
         pass
@@ -51,7 +58,12 @@ class Cat:
         pass
 
     def _set_average_speed(self):
-        pass
+        if self.age <= 7:
+            return 12
+        elif 7 < self.age <= 10:
+            return 9
+        elif self.age > 10:
+            return 6
 
     def run(self, hours):
         pass
