@@ -148,6 +148,7 @@ class Wall:
     def wall_square(self):
         return self.width * self.height
 
+    # TODO
     def number_of_rolls_of_wallpaper(self, roll_width_m, roll_length_m):
         pass
 
@@ -294,49 +295,74 @@ class House:
     """
 
     def __init__(self):
-        pass
+        self.__walls = []
+        self.___windows = []
+        self.__roof = None
+        self.__door = None
 
-    def create_wall(self):
-        pass
+    def create_wall(self, width, height):
+        if width == 0 or height == 0:
+            raise ValueError("Value must be not 0")
+        elif len(self.__walls) >= 4:
+            raise ValueError("Our house can not have more than 4 walls")
+        else:
+            self.__walls.append(Wall(width, height))
 
-    def create_roof(self):
-        pass
+    def create_roof(self, width, height, roof_type):
+        if width == 0 or height == 0:
+            raise ValueError("Value must be not 0")
+        elif self.__roof:
+            raise ValueError("The house can not have two roofs")
+        else:
+            self.__roof = Roof(width, height, roof_type)
 
-    def create_window(self):
-        pass
+    def create_window(self, width, height):
+        if width == 0 or height == 0:
+            raise ValueError("Value must be not 0")
+        else:
+            self.___windows.append(Window(width, height))
 
-    def create_door(self):
-        pass
+    def create_door(self, width, height):
+        if width == 0 or height == 0:
+            raise ValueError("Value must be not 0")
+        elif self.__door:
+            raise ValueError("The house can not have two doors")
+        else:
+            self.__door = Door(width, height)
 
     def get_count_of_walls(self):
-        pass
+        return len(self.__walls)
 
     def get_count_of_windows(self):
-        pass
+        return len(self.___windows)
 
-    def get_door_price(self):
-        pass
+    def get_door_price(self, material):
+        return self.__door.door_price(material)
 
-    def update_wood_price(self):
-        pass
+    def update_wood_price(self, new_wood_price):
+        return self.__door.update_wood_price(new_wood_price)
 
-    def update_metal_price(self):
-        pass
+    def update_metal_price(self, new_metal_price):
+        return self.__door.update_wood_price(new_metal_price)
 
     def get_roof_square(self):
-        pass
+        return self.__roof.roof_square()
 
     def get_walls_square(self):
-        pass
+        return sum(wall.wall_square() for wall in self.__walls)
 
     def get_windows_square(self):
-        pass
+        return sum(window.window_square() for window in self.___windows)
 
     def get_door_square(self):
-        pass
+        return self.__door.door_square()
 
-    def get_number_of_rolls_of_wallpapers(self):
-        pass
+    def get_number_of_rolls_of_wallpapers(self, roll_width_m, roll_length_m):
+        if roll_length_m == 0 or roll_width_m == 0:
+            raise ValueError("Sorry length must be not 0")
+        else:
+            return sum([wall.number_of_rolls_of_wallpaper(roll_width_m, roll_length_m) for wall in self.__walls])
 
+# TODO
     def get_room_square(self):
         pass
