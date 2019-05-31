@@ -51,7 +51,7 @@ class SerCesar(Cesar):
     @classmethod
     def from_yaml(cls, data):
         name = data['name']
-        garages = [SerGarage.from_yaml_string(data) in data['garages']]
+        garages = [SerGarage.from_yaml_string(garage) for garage in data['garages']]
         return SerCesar(name=name, garages=garages)
 
     def instance_from_yaml_string(obj, yaml_string: str):
