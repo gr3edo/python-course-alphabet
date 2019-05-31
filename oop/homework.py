@@ -53,11 +53,11 @@ class Cat:
 
     def _reduce_saturation_level(self, value):
         self.saturation_level -= value
-        return min(self.saturation_level, 0)
+        return max(self.saturation_level, 0)
 
     def _increase_saturation_level(self, value):
         self.saturation_level += value
-        return max(self.saturation_level, 100)
+        return min(self.saturation_level, 100)
 
     def _set_average_speed(self):
         if self.age <= 7:
