@@ -20,6 +20,9 @@ Advanced
 import json
 import pickle
 import uuid
+import random
+from objects_and_classes.homework.constants import TOWNS, CARS_PRODUCER, \
+    CARS_TYPES
 
 from ruamel import yaml
 from ruamel.yaml import YAML
@@ -144,3 +147,88 @@ class SerGarage(Garage):
         town = data['town']
         owner = data['owner']
         return SerGarage(cars=cars, places=places, town=town, owner=owner)
+
+
+def separator():
+    print("\n" + 30 * "-" + "\n")
+
+
+def debug_instance_json(name, instance, cls):
+    print(f"\n{name}:")
+    print(instance)
+    instance_str = instance.to_json()
+    print(f"\n{name} to_json:")
+    print(instance_str)
+    instance_from_str = cls.from_json(instance_str)
+    print(f"\n{name} from_json:")
+    print(instance_from_str)
+    instance.to_json_file()
+    print(f"\n{name} from_json_file:")
+    print(cls.from_json_file())
+
+
+def debug_instance_yaml(name, instance, cls):
+    print(f"{name}:")
+    print(instance)
+    instance_str = instance.to_yaml()
+    print(f"\n{name} to_yaml:")
+    print(instance_str)
+    instance_from_str = instance.instance_from_yaml_string(yaml_string=instance_str)
+    print(f"\n{name} from_yaml:")
+    print(instance_from_str)
+    instance.to_yaml_file()
+    print(f"\n{name} from_yaml_file:")
+    print(cls.from_yaml_file())
+
+
+def debug_instance_pickle(name, instance, cls):
+    print(f"{name}:")
+    print(instance)
+    instance_str = instance.to_pickle()
+    print(f"\n{name} to_pickle:")
+    print(instance_str)
+    instance_from_str = cls.from_pickle(instance_str)
+    print(f"\n{name} from_pickle:")
+    print(instance_from_str)
+    instance.to_pickle_file()
+    print(f"\n{name} from_pickle_file:")
+    print(cls.from_pickle_file())
+
+
+if __name__ == '__main__':
+    car1 = SerCar(price=random.randint(5000, 50000),
+                  car_type=random.choice(CARS_TYPES),
+                  producer=random.choice(CARS_PRODUCER),
+                  mileage=random.randint(1000, 5000))
+    car2 = SerCar(price=random.randint(5000, 50000),
+                  car_type=random.choice(CARS_TYPES),
+                  producer=random.choice(CARS_PRODUCER),
+                  mileage=random.randint(1000, 5000))
+    car3 = SerCar(price=random.randint(5000, 50000),
+                  car_type=random.choice(CARS_TYPES),
+                  producer=random.choice(CARS_PRODUCER),
+                  mileage=random.randint(1000, 5000))
+    car4 = SerCar(price=random.randint(5000, 50000),
+                  car_type=random.choice(CARS_TYPES),
+                  producer=random.choice(CARS_PRODUCER),
+                  mileage=random.randint(1000, 5000))
+
+    garage1 = SerGarage(town=random.choice(TOWNS), places=2)
+    garage2 = SerGarage(town=random.choice(TOWNS), places=3)
+    garage3 = SerGarage(town=random.choice(TOWNS), places=4)
+
+    cesar1 = SerCesar(name="John", garages=[garage1, garage2, garage3])
+
+    cesar1.add_car(car1, garage=garage1)
+    cesar1.add_car(car2, garage=garage1)
+    cesar1.add_car(car3, garage=garage2)
+    cesar1.add_car(car4, garage=garage3)
+
+    print("\n\t ### JSON ###")
+    debug_instance_json('car', car1, SerCar)
+
+    print("\n\t ### YAML ###")
+    debug_instance_yaml('cesar', cesar1, SerCesar)
+
+    print("\n\t ### PICKLE ###")
+    debug_instance_pickle('garage', garage1, SerGarage)
